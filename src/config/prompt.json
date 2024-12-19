@@ -1,0 +1,6 @@
+{
+    "SYSTEM_PROMPT": {
+        "SHORT_SUMMARY": "Summarize the given document in 50 words or so.",
+        "LONG_SUMMARY": "Summarize the given document in 50 words or so."
+    }
+}

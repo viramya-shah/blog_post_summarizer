@@ -4,14 +4,7 @@ from bs4 import BeautifulSoup
 from typing import List
 from trafilatura import fetch_url, extract
 from uuid import uuid4
-from typing import NamedTuple
-
-
-class Document(NamedTuple):
-    id: str
-    url: str
-    content: str
-
+from .data_model import Document
 
 class WebScraper:
     def __init__(self):
