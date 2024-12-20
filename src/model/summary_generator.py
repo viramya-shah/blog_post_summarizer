@@ -34,7 +34,7 @@ class Summary:
                     response_format=LongSummaryDataModel
                 )
 
-        return completion.choices[0].message.parsed.summary
+        return completion.choices[0].message.parsed.summary, completion.choices[0].message.parsed.title 
     
     def _save(self, docs):
         """
@@ -59,11 +59,10 @@ class Summary:
     def generate_summary(self, documents: list[Document]):
         res = []
         for docs in documents:
-
-            docs.short_summary = self._generate_summary(text_to_summarize=docs.content, type='short')
-            docs.long_summary = self._generate_summary(text_to_summarize=docs.content, type='long')
-
             
+            docs.short_summary, docs.title = self._generate_summary(text_to_summarize=docs.content, type='short')
+            docs.long_summary, _ = self._generate_summary(text_to_summarize=docs.content, type='long')
+
             res.append(docs)
         self._save(res)
         return res

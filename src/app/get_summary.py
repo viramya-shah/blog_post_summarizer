@@ -8,9 +8,10 @@ from itertools import chain
 
 webscraper = WebScraper()
 
+st.set_page_config(layout="wide")
 st.title('Summarize')
 
-
+prompt_config = json.load(open("./src/config/prompt.json", 'r'))
 
 input_url = st.text_area(label="Paste the URLs here (enter each in a new line)")
 
@@ -19,21 +20,26 @@ if input_url is not None and len(input_url) > 0:
 
     # TODO: _validate_urls()
 
-    docs = webscraper.scrape(urls=input_url_list, nested=False)
+    with st.status('Generating Summary'):
+        st.write('Fetching content...')
+        docs = webscraper.scrape(urls=input_url_list, nested=False)
+        st.write('Generating summary...')
+        client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
+        summary = Summary(client=client, prompts=prompt_config)
+        summary_docs = summary.generate_summary(documents=docs)
+        st.write('Making sure everything worked correctly...')
+        for idx, url_and_ind_summary in enumerate(zip(input_url_list, summary_docs)):
+            url, ind_summary = url_and_ind_summary
+            st.session_state['current_summary'].append((idx, url, ind_summary))
 
-    prompt_config = json.load(open("./src/config/prompt.json", 'r'))
+    # st.session_state['current_summary'].append()
 
-    client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
+    # st.session_state['current_summary'].append(summary_docs)
 
-    summary = Summary(client=client, prompts=prompt_config)
-
-    summary_docs = summary.generate_summary(documents=docs)
-
-    st.session_state['current_summary'].append(summary_docs)
-
-# clean_button = st.sidebar.button("Clean")
-# if clean_button:
-#     st.session_state['current_summary'] = []
 
 if len(st.session_state['current_summary']) > 0:
-    st.write(list(map(lambda x: x.short_summary, chain.from_iterable(st.session_state['current_summary']))))
+    st.markdown("All your searches (in this session) will appear below")
+    for idx, url, ind_summary in st.session_state['current_summary'][::-1]:
+        st.markdown(f"<a href='{str(url)}'><b>{ind_summary.title}</b></a>", unsafe_allow_html=True)
+        st.markdown(ind_summary.short_summary)
+        st.markdown('<hr>', unsafe_allow_html=True)

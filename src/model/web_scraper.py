@@ -1,7 +1,3 @@
-import time
-import requests
-from bs4 import BeautifulSoup
-from typing import List
 from trafilatura import fetch_url, extract
 from uuid import uuid4
 from .data_model import Document
