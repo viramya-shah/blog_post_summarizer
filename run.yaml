@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   blog_post_summarizer:
-    image: blog_post_summarizer:0.7
+    image: viramyashah/blog_post_summarizer:latest
     ports:
       - "8501:8501"
     volumes:
