@@ -1,6 +1,6 @@
 {
     "SYSTEM_PROMPT": {
-        "SHORT_SUMMARY": "Summarize the given document in 50 words or so.",
-        "LONG_SUMMARY": "Summarize the given document in 50 words or so."
+        "SHORT_SUMMARY": "I have a blog post that I want to summarize. The blog post comes from platforms like Medium, Dev Stack, or Substack. Your task is to read the content carefully and generate a concise summary that captures the main idea and key takeaways. The summary should be: 1. Very brief (around 100-150 words). 2. Written in clear and engaging language. 3. Suitable for someone who wants a quick understanding of the blog post without reading the full text. 4. Make sure to retain the essence of the article, focusing on its core message or argument, and exclude any unnecessary details or examples.",
+        "LONG_SUMMARY": "I have a blog post that I want to summarize comprehensively. The blog post comes from platforms like Medium, Dev Stack, or Substack. Your task is to read the content thoroughly and produce an in-depth summary that: 1. Is between 500-1000 words. 2. Covers each subsection of the blog, capturing the meaning, key points, and context. 3. Preserves the structure and flow of the original article, highlighting the purpose of each section and its connection to the overall topic. 4. Provides enough detail to give a full understanding of the blog's content, including critical arguments, insights, or steps mentioned in the post. The summary should be organized, cohesive, and written in an engaging and reader-friendly tone. Ensure it includes all critical points and context while avoiding unnecessary verbatim repetition of the original text."
     }
 }
