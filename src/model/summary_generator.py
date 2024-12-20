@@ -5,12 +5,17 @@ from .data_model import Document, ShortSummaryDataModel, LongSummaryDataModel
 class Summary:
     def __init__(self, client: OpenAI, prompts: dict):
         """
-        
+        Init with necessary attributes
         """
         self.client = client
         self.prompts = prompts
 
     def _generate_summary(self, text_to_summarize: str, type: str = 'short'):
+        """
+        Internal function to generate a particular kind of summary
+        :param text_to_summarize: str-like object that needs to be summarized
+        :param type: Whether to create a short or a long summary. Possible values: [short, long]
+        """
         match type:
             case 'short':
                 completion = self.client.beta.chat.completions.parse(
@@ -36,9 +41,10 @@ class Summary:
 
         return completion.choices[0].message.parsed.summary, completion.choices[0].message.parsed.title 
     
-    def _save(self, docs):
+    def _save(self, docs: list[Document]):
         """
-        
+        Maintains a CSV file with all the generated summaries
+        :param docs: List of Document-like object
         """
         file_path = './data/master_summaries.csv'
 
@@ -56,7 +62,12 @@ class Summary:
         df.to_csv(file_path, index=False)
         print(f"CSV updated and saved to {file_path}.")
     
-    def generate_summary(self, documents: list[Document]):
+    def generate_summary(self, documents: list[Document]) -> list[Document]:
+        """
+        Main function to generate summary
+        :param documents: list of Document-like objects
+        :return: A list of Document-like object
+        """
         res = []
         for docs in documents:
             

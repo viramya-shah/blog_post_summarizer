@@ -4,7 +4,6 @@ from src.model.web_scraper import WebScraper
 from src.model.summary_generator import Summary
 import json
 import os
-from itertools import chain
 
 webscraper = WebScraper()
 
@@ -31,11 +30,6 @@ if input_url is not None and len(input_url) > 0:
         for idx, url_and_ind_summary in enumerate(zip(input_url_list, summary_docs)):
             url, ind_summary = url_and_ind_summary
             st.session_state['current_summary'].append((idx, url, ind_summary))
-
-    # st.session_state['current_summary'].append()
-
-    # st.session_state['current_summary'].append(summary_docs)
-
 
 if len(st.session_state['current_summary']) > 0:
     st.markdown("All your searches (in this session) will appear below")
